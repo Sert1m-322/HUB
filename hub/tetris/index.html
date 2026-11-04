@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris</title>
+    <link rel="stylesheet" href="tetris.css">
+</head>
+<body>
+
+    <div class="wrapper">
+        <!-- Игровое поле -->
+        <canvas id="game" width="400" height="800"></canvas>
+    
+        <!-- Правая панель с информацией и топом -->
+        <div class="info-panel">
+            
+            <!-- Следующая фигура и счет -->
+            <div class="next-block">
+                <p class="text">Next:</p>
+                <canvas id="next" width="160" height="200"></canvas>
+                <p class="text points">Score: 0</p>
+                <p class="text best">Best: 0</p>
+                <p class="text speed">Speed in ms: 1000</p>
+            </div>
+
+            <!-- Блок лидеров -->
+            <div class="leaderboard-block">
+                <h3>Top 10 Players</h3>
+                
+                <div class="input-group">
+                    <input type="text" id="usernameInput" placeholder="Your name" maxlength="15">
+                    <button id="loadLeaderboardBtn">Top aktualisieren</button>
+                </div>
+
+                <ol id="leaderboardList"></ol>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="tetris.js"></script>
+</body>
+</html>
