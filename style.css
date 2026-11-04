@@ -35,8 +35,6 @@ body{
     justify-content: center;
     align-items: center;
 
-    margin-bottom: 50px;
-
     border-color: white;
     border: 2px solid white;
     border-radius: 18px;
@@ -57,4 +55,15 @@ body{
 .text-header{
     text-align: center;
     color: white;
+}
+
+
+.header{
+    display: flex;
+    flex-direction: column;   /* элементы друг под другом */
+    align-items: center;      /* центр по горизонтали */
+    margin: 30px 0;
+}
+.logo{
+    height: 120px;            /* на главной можно крупнее, чем в углу других сайтов */
 }

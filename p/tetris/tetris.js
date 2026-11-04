@@ -12,116 +12,6 @@ const score_text = document.querySelector(".points");
 const best_text = document.querySelector(".best");
 const speed_text = document.querySelector(".speed");
 
-const getB = document.querySelector(".getScore");
-const putB = document.querySelector(".sendScore");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const LEADERBOARD_URL = "http://87.106.59.178:13063/api/v1/entries/tetris%3Aleaderboard";
-
-const usernameInput = document.getElementById("usernameInput");
-const leaderboardList = document.getElementById("leaderboardList");
-const loadBtn = document.getElementById("loadLeaderboardBtn");
-
-// 1. Отобразить массив рекордов в HTML
-function renderLeaderboard(players) {
-  leaderboardList.innerHTML = "";
-  players.forEach((player) => {
-    const li = document.createElement("li");
-    li.textContent = `${player.username}: ${player.score}`;
-    leaderboardList.appendChild(li);
-  });
-}
-
-// 2. Загрузить топ с сервера
-async function getLeaderboard() {
-  try {
-    const response = await fetch(LEADERBOARD_URL);
-    if (response.status === 404) {
-      return []; // Если топа ещё нет на сервере
-    }
-    if (!response.ok) throw new Error("Ошибка загрузки топа");
-    return await response.json();
-  } catch (err) {
-    console.error(err);
-    return [];
-  }
-}
-
-// 3. Сохранить новый результат в топ
-async function saveScoreToLeaderboard(newScore) {
-  const name = usernameInput.value.trim() || "Anonym";
-  
-  // Скачиваем текущий топ
-  let list = await getLeaderboard();
-
-  // Проверяем, есть ли уже этот игрок
-  const existingPlayer = list.find(p => p.username === name);
-  if (existingPlayer) {
-    // Обновляем рекорд, только если новый счет выше
-    if (newScore > existingPlayer.score) {
-      existingPlayer.score = newScore;
-    }
-  } else {
-    // Добавляем нового игрока
-    list.push({ username: name, score: newScore });
-  }
-
-  // Сортируем от большего к меньшему
-  list.sort((a, b) => b.score - a.score);
-
-  // Оставляем только Топ-10
-  list = list.slice(0, 10);
-
-  // Отправляем обновленный список на сервер
-  try {
-    await fetch(LEADERBOARD_URL, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(list)
-    });
-    renderLeaderboard(list);
-  } catch (err) {
-    console.error("Ошибка сохранения:", err);
-  }
-}
-
-// Слушатель клика по кнопке "Обновить топ"
-loadBtn.addEventListener("click", async (e) => {
-  e.target.blur();
-  const list = await getLeaderboard();
-  renderLeaderboard(list);
-});
-
-// Загрузить топ при старте страницы
-getLeaderboard().then(renderLeaderboard);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 let matrix = [
   ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
@@ -470,7 +360,7 @@ function tick() {
   if (!canMove(0, 1) && y_p < 1) {
     game_over = true;
 
-    saveScoreToLeaderboard(score);
+    // CLAUDE: убрал saveScoreToLeaderboard(score), сохранение на бэкенд
 
     ctx.fillStyle = "red";
 
@@ -526,5 +416,3 @@ function tick() {
 }
 
 tick();
-
-

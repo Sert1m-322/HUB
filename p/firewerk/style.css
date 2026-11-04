@@ -7,3 +7,15 @@ body {
 canvas { 
     display: block; 
 }
+
+
+.hub-logo{
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 10;
+}
+.hub-logo img{
+    height: 50px;
+    display: block;
+}
